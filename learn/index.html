@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learn — free interactive lessons for classrooms</title>
+<meta name="description" content="Free interactive lessons in computer science and commerce. Number bases, logic gates, sorting algorithms, the CPU cycle and break-even analysis. No signup, works offline once loaded.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBF7F0;--paper2:#F2EBE0;--card:#FFFDF9;--ink:#1B2A2E;--ink70:rgba(27,42,46,.72);--ink45:rgba(27,42,46,.45);
+--line:rgba(27,42,46,.14);--teal:#0F6E6E;--coral:#D9503A;--amber:#C98A1E;--violet:#5B4B9E;
+--d:"Newsreader",Georgia,serif;--b:"Inter",system-ui,sans-serif;--m:"JetBrains Mono",ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--b);font-weight:300;font-size:16px;line-height:1.6;padding-bottom:70px}
+.w{max-width:900px;margin:0 auto;padding:0 20px}
+.top{padding:52px 0 4px;border-bottom:1px solid var(--line)}
+.kick{font-family:var(--m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral)}
+h1{font-family:var(--d);font-weight:700;font-size:clamp(34px,6.4vw,56px);line-height:1.03;letter-spacing:-.025em;margin-top:12px;max-width:15ch}
+h1 em{font-style:italic;color:var(--teal)}
+.lede{margin-top:18px;max-width:58ch;color:var(--ink70);padding-bottom:34px}
+.grid{margin-top:34px;display:grid;gap:14px}
+.les{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;
+transition:border-color .16s,transform .16s;box-shadow:0 1px 2px rgba(27,42,46,.04);position:relative;overflow:hidden}
+.les::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,var(--teal))}
+.les:hover{border-color:var(--c,var(--teal));transform:translateY(-2px)}
+.les:focus-visible{outline:2.5px solid var(--coral);outline-offset:3px}
+.sub{font-family:var(--m);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--c,var(--teal))}
+.les h2{font-family:var(--d);font-weight:600;font-size:23px;margin:8px 0 7px;letter-spacing:-.01em}
+.les p{font-size:14.5px;color:var(--ink70);max-width:58ch}
+.who{font-family:var(--m);font-size:11px;color:var(--ink45);margin-top:11px}
+.box{margin-top:44px;background:var(--paper2);border:1px solid var(--line);border-radius:10px;padding:24px}
+.box h3{font-family:var(--d);font-weight:600;font-size:17px;margin-bottom:11px}
+.box p{font-size:14px;color:var(--ink70);max-width:64ch;margin-bottom:9px}
+.box a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(15,110,110,.35)}
+footer{margin-top:32px;font-family:var(--m);font-size:10.5px;color:var(--ink45)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="w">
+
+<div class="top">
+  <div class="kick">Free · no signup · use freely in class</div>
+  <h1>Lessons you can <em>poke at.</em></h1>
+  <p class="lede">Five interactive lessons in computer science and commerce. Each one shows its working rather than just an answer, so a student can reproduce it by hand — which is what an exam actually asks for. Everything runs in the browser; nothing is uploaded, nothing is tracked.</p>
+</div>
+
+<div class="grid">
+
+  <a class="les" href="bases/" style="--c:var(--teal)">
+    <div class="sub">Computer science · Number systems</div>
+    <h2>Binary, decimal, hex and octal</h2>
+    <p>Convert between all four bases at once — and see the division-and-remainder method written out underneath, step by step, so the answer can be checked by hand.</p>
+    <div class="who">Class 9–12 computer science, undergraduate CS foundations</div>
+  </a>
+
+  <a class="les" href="logic/" style="--c:var(--violet)">
+    <div class="sub">Computer science · Digital electronics</div>
+    <h2>Logic gates and truth tables</h2>
+    <p>Flip two switches and watch seven gates respond live. The truth table below highlights the row matching your current inputs, connecting the abstract table to something moving.</p>
+    <div class="who">Digital electronics, computer organisation</div>
+  </a>
+
+  <a class="les" href="sorting/" style="--c:var(--coral)">
+    <div class="sub">Computer science · Algorithms</div>
+    <h2>Sorting algorithms, counted</h2>
+    <p>Bubble, selection, insertion and merge sort running on the same data, with live comparison and swap counters. The counters are the lesson: they show why two algorithms that both work are not equally good.</p>
+    <div class="who">Data structures and algorithms, class 11–12 and undergraduate</div>
+  </a>
+
+  <a class="les" href="../tools/cpu/" style="--c:var(--amber)">
+    <div class="sub">Computer science · Computer organisation</div>
+    <h2>How a CPU runs an instruction</h2>
+    <p>Step through fetch, decode and execute one stage at a time, watching the program counter, registers and memory change as a tiny program adds two numbers.</p>
+    <div class="who">Computer organisation and architecture</div>
+  </a>
+
+  <a class="les" href="breakeven/" style="--c:#2F7A4F">
+    <div class="sub">Commerce · Business studies</div>
+    <h2>Break-even and unit economics</h2>
+    <p>Contribution per unit, break-even point, P/V ratio and margin of safety — each with the formula written out in full. Change any input and every figure recalculates.</p>
+    <div class="who">Class 11–12 commerce and accountancy, business studies, BBA</div>
+  </a>
+
+</div>
+
+<div class="box">
+  <h3>For teachers</h3>
+  <p>These are free to use in class, project on a board, or send to students — no attribution needed, no account required. Each page is a single self-contained file, so once it has loaded it keeps working without internet, which matters in a lab with unreliable wifi.</p>
+  <p>They are deliberately narrow. Each does one concept properly rather than covering a whole syllabus, and each states its own assumptions and limits where they exist. If a lesson would help your subject and isn't here, it probably just hasn't been built yet.</p>
+</div>
+
+<footer>Built by <a href="https://shivee999.github.io/links/" style="color:var(--ink45)">Shive</a> &middot; more <a href="../tools/" style="color:var(--ink45)">tools</a></footer>
+</div></body></html>
