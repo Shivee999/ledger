@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sorting Algorithms — watch them run</title><meta name="description" content="Step through bubble, selection, insertion and merge sort with live comparison and swap counts. For computer science students.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBF7F0;--paper2:#F2EBE0;--card:#FFFDF9;--ink:#1B2A2E;--ink70:rgba(27,42,46,.72);--ink45:rgba(27,42,46,.45);
+--line:rgba(27,42,46,.14);--teal:#0F6E6E;--coral:#D9503A;--amber:#C98A1E;--violet:#5B4B9E;
+--d:"Newsreader",Georgia,serif;--b:"Inter",system-ui,sans-serif;--m:"JetBrains Mono",ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--b);font-weight:300;font-size:16px;line-height:1.6;padding-bottom:70px}
+.w{max-width:840px;margin:0 auto;padding:0 20px}
+.back{display:inline-block;margin:26px 0 0;font-family:var(--m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink45);text-decoration:none}
+.back:hover{color:var(--teal)}
+.tag{font-family:var(--m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin-top:22px}
+h1{font-family:var(--d);font-weight:700;font-size:clamp(29px,5.2vw,44px);line-height:1.08;letter-spacing:-.02em;margin-top:8px}
+.lede{margin-top:14px;max-width:60ch;color:var(--ink70);font-size:16px}
+h2{font-family:var(--d);font-weight:600;font-size:21px;margin-bottom:12px}
+.p{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:22px;margin-top:24px;box-shadow:0 1px 2px rgba(27,42,46,.04)}
+.note{display:flex;gap:9px;margin-top:14px;font-size:13px;color:#8A5A12;background:rgba(201,138,30,.09);border:1px solid rgba(201,138,30,.28);padding:11px 13px;border-radius:7px}
+.note b{font-family:var(--m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;padding-top:2px}
+label{font-family:var(--m);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45);display:block;margin-bottom:6px}
+input,select{width:100%;font-family:var(--m);font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--teal);outline-offset:1px}
+button{font-family:var(--m);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:10px 15px;border-radius:5px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink70)}
+button.pri{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:500}
+button:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+table{width:100%;border-collapse:collapse;font-family:var(--m);font-size:13px}
+th{text-align:left;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45);font-weight:500;padding:8px 10px;border-bottom:1.5px solid var(--ink)}
+td{padding:8px 10px;border-bottom:1px solid var(--line)}
+footer{margin-top:36px;font-family:var(--m);font-size:10.5px;color:var(--ink45)}
+footer a{color:var(--ink45)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="w">
+<a class="back" href="../">&larr; Learn index</a>
+<div class="tag">Computer science · Algorithms</div>
+<h1>Four sorts, same data, counted.</h1>
+<p class="lede">Press play and watch. The counters underneath are the point — they show you why two algorithms that both "work" are not equally good.</p>
+<div class="p">
+  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px" id="algs"></div>
+  <div id="bars" style="display:flex;align-items:flex-end;gap:3px;height:190px;padding:10px;background:var(--paper);border:1px solid var(--line);border-radius:7px"></div>
+  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:16px">
+    <button class="pri" id="play">Play</button><button id="stepb">Step</button><button id="shuf">New data</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:18px">
+    <div style="background:var(--card);padding:12px"><div style="font-family:var(--m);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45)">Comparisons</div><div id="cmp" style="font-family:var(--d);font-weight:700;font-size:25px;color:var(--teal)">0</div></div>
+    <div style="background:var(--card);padding:12px"><div style="font-family:var(--m);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45)">Swaps / writes</div><div id="swp" style="font-family:var(--d);font-weight:700;font-size:25px;color:var(--coral)">0</div></div>
+    <div style="background:var(--card);padding:12px"><div style="font-family:var(--m);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45)">Status</div><div id="st" style="font-family:var(--d);font-weight:700;font-size:17px;padding-top:5px">Ready</div></div>
+  </div>
+</div>
+<div class="p"><h2>What you are seeing</h2><div id="expl" style="font-size:14.5px;color:var(--ink70)"></div></div>
+<div class="p"><h2>How they compare</h2>
+<div style="overflow-x:auto"><table><tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Extra memory</th></tr>
+<tr><td>Bubble</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+<tr><td>Selection</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+<tr><td>Insertion</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+<tr><td>Merge</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td></tr></table></div>
+<div class="note"><b>Note</b><span>Merge sort wins on time but needs extra memory proportional to the input. That trade — faster but hungrier — is the kind of decision algorithm choice usually comes down to in practice.</span></div></div>
+<footer>Free to use in classrooms. No signup, nothing stored on a server. &middot; <a href="../">More lessons</a></footer></div><script>
+const N=22; let arr=[],frames=[],fi=0,alg="bubble",timer=null;
+const ALG={bubble:"Bubble sort",selection:"Selection sort",insertion:"Insertion sort",merge:"Merge sort"};
+const EX={
+ bubble:"<b style='color:var(--ink);font-weight:500'>Bubble sort</b> walks the list comparing neighbours and swapping any pair in the wrong order. After each full pass the largest remaining value has bubbled to the end. Simple to write, and slow — it can compare the same pair many times.",
+ selection:"<b style='color:var(--ink);font-weight:500'>Selection sort</b> scans for the smallest remaining value, then swaps it into position. It always makes the same number of comparisons regardless of the input, but very few swaps — useful when writing is expensive.",
+ insertion:"<b style='color:var(--ink);font-weight:500'>Insertion sort</b> builds the sorted section one item at a time, sliding each new value back to where it belongs. On nearly-sorted data it is genuinely fast, which is why real libraries use it for small chunks.",
+ merge:"<b style='color:var(--ink);font-weight:500'>Merge sort</b> splits the list in half over and over, then merges the pieces back in order. It divides the problem instead of scanning repeatedly, which is what gets it to n log n — but it needs a second array to merge into."};
+function gen(){arr=Array.from({length:N},()=>Math.floor(Math.random()*95)+8);build()}
+function snap(a,hi,done,c,s){frames.push({a:a.slice(),hi:hi.slice(),done:done.slice(),c,s})}
+function build(){
+  frames=[];fi=0;let a=arr.slice(),c=0,s=0;
+  if(alg==="bubble"){let d=[];for(let i=0;i<a.length;i++){for(let j=0;j<a.length-i-1;j++){c++;snap(a,[j,j+1],d,c,s);if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];s++;snap(a,[j,j+1],d,c,s)}}d.push(a.length-i-1)}}
+  else if(alg==="selection"){let d=[];for(let i=0;i<a.length;i++){let m=i;for(let j=i+1;j<a.length;j++){c++;snap(a,[m,j],d,c,s);if(a[j]<a[m])m=j}if(m!==i){[a[i],a[m]]=[a[m],a[i]];s++}d.push(i);snap(a,[i],d,c,s)}}
+  else if(alg==="insertion"){let d=[0];for(let i=1;i<a.length;i++){let k=a[i],j=i-1;while(j>=0){c++;snap(a,[j,j+1],d,c,s);if(a[j]>k){a[j+1]=a[j];s++;j--}else break}a[j+1]=k;s++;d.push(i);snap(a,[j+1],d,c,s)}}
+  else{const ms=(lo,hi)=>{if(hi-lo<2)return;const mid=(lo+hi)>>1;ms(lo,mid);ms(mid,hi);const t=[];let i=lo,j=mid;
+    while(i<mid&&j<hi){c++;snap(a,[i,j],[],c,s);t.push(a[i]<=a[j]?a[i++]:a[j++])}
+    while(i<mid)t.push(a[i++]);while(j<hi)t.push(a[j++]);
+    for(let k=0;k<t.length;k++){a[lo+k]=t[k];s++;snap(a,[lo+k],[],c,s)}};ms(0,a.length)}
+  snap(a,[],a.map((_,i)=>i),c,s);
+  draw();
+}
+function draw(){
+  const f=frames[fi]||{a:arr,hi:[],done:[],c:0,s:0};
+  const mx=Math.max(...f.a);
+  document.getElementById('bars').innerHTML=f.a.map((v,i)=>{
+    const col=f.done.includes(i)?'var(--teal)':f.hi.includes(i)?'var(--coral)':'rgba(27,42,46,.22)';
+    return '<div style="flex:1;height:'+(v/mx*100)+'%;background:'+col+';border-radius:2px 2px 0 0"></div>'}).join('');
+  document.getElementById('cmp').textContent=f.c;
+  document.getElementById('swp').textContent=f.s;
+  document.getElementById('st').textContent=fi>=frames.length-1?'Sorted':'Running';
+  document.getElementById('st').style.color=fi>=frames.length-1?'var(--teal)':'var(--ink70)';
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').textContent='Play'}}
+document.getElementById('algs').innerHTML=Object.entries(ALG).map(([k,v],i)=>
+ '<button data-a="'+k+'" class="'+(i===0?'pri':'')+'">'+v+'</button>').join('');
+document.getElementById('algs').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return; stop();
+  document.querySelectorAll('#algs button').forEach(x=>x.className='');
+  b.className='pri'; alg=b.dataset.a; document.getElementById('expl').innerHTML=EX[alg]; build();
+});
+document.getElementById('play').addEventListener('click',()=>{
+  if(timer){stop();return}
+  if(fi>=frames.length-1)fi=0;
+  document.getElementById('play').textContent='Pause';
+  timer=setInterval(()=>{if(fi>=frames.length-1){stop();return}fi++;draw()},28);
+});
+document.getElementById('stepb').addEventListener('click',()=>{stop();if(fi<frames.length-1){fi++;draw()}});
+document.getElementById('shuf').addEventListener('click',()=>{stop();gen()});
+document.getElementById('expl').innerHTML=EX.bubble;
+gen();
+</script></body></html>
