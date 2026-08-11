@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Logic Gates & Truth Tables — interactive</title><meta name="description" content="Flip the inputs and watch seven logic gates respond. Truth tables build themselves. For computer science and electronics students.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBF7F0;--paper2:#F2EBE0;--card:#FFFDF9;--ink:#1B2A2E;--ink70:rgba(27,42,46,.72);--ink45:rgba(27,42,46,.45);
+--line:rgba(27,42,46,.14);--teal:#0F6E6E;--coral:#D9503A;--amber:#C98A1E;--violet:#5B4B9E;
+--d:"Newsreader",Georgia,serif;--b:"Inter",system-ui,sans-serif;--m:"JetBrains Mono",ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--b);font-weight:300;font-size:16px;line-height:1.6;padding-bottom:70px}
+.w{max-width:840px;margin:0 auto;padding:0 20px}
+.back{display:inline-block;margin:26px 0 0;font-family:var(--m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink45);text-decoration:none}
+.back:hover{color:var(--teal)}
+.tag{font-family:var(--m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin-top:22px}
+h1{font-family:var(--d);font-weight:700;font-size:clamp(29px,5.2vw,44px);line-height:1.08;letter-spacing:-.02em;margin-top:8px}
+.lede{margin-top:14px;max-width:60ch;color:var(--ink70);font-size:16px}
+h2{font-family:var(--d);font-weight:600;font-size:21px;margin-bottom:12px}
+.p{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:22px;margin-top:24px;box-shadow:0 1px 2px rgba(27,42,46,.04)}
+.note{display:flex;gap:9px;margin-top:14px;font-size:13px;color:#8A5A12;background:rgba(201,138,30,.09);border:1px solid rgba(201,138,30,.28);padding:11px 13px;border-radius:7px}
+.note b{font-family:var(--m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;padding-top:2px}
+label{font-family:var(--m);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45);display:block;margin-bottom:6px}
+input[type=text],input[type=number],select{width:100%;font-family:var(--m);font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--teal);outline-offset:1px}
+button{font-family:var(--m);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:10px 15px;border-radius:5px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink70)}
+button.pri{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:500}
+button:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+table{width:100%;border-collapse:collapse;font-family:var(--m);font-size:13px}
+th{text-align:left;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45);font-weight:500;padding:8px 10px;border-bottom:1.5px solid var(--ink)}
+td{padding:8px 10px;border-bottom:1px solid var(--line)}
+footer{margin-top:36px;font-family:var(--m);font-size:10.5px;color:var(--ink45)}
+footer a{color:var(--ink45)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="w">
+<a class="back" href="../">&larr; Learn index</a>
+<div class="tag">Computer science · Digital electronics</div>
+<h1>Logic gates you can actually flip.</h1>
+<p class="lede">Every gate below responds live to the two switches. Change A and B, watch which gates light up, and read the truth table that describes each one.</p>
+<div class="p">
+  <div style="display:flex;gap:26px;flex-wrap:wrap;align-items:center;justify-content:center">
+    <div style="text-align:center"><label style="text-align:center">Input A</label><button id="A" class="sw">0</button></div>
+    <div style="text-align:center"><label style="text-align:center">Input B</label><button id="B" class="sw">0</button></div>
+  </div>
+  <div id="gates" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:24px"></div>
+</div>
+<div class="p"><h2>Truth tables</h2><p style="font-size:14px;color:var(--ink70);margin-bottom:14px">Every possible input combination, with the row matching your current switches highlighted.</p><div id="tt" style="overflow-x:auto"></div></div>
+<div class="p"><h2>Reading these</h2>
+<div style="display:grid;gap:11px;font-size:14.5px;color:var(--ink70)">
+<div><b style="color:var(--ink);font-weight:500">AND</b> — output is 1 only when both inputs are 1. Think "both conditions must hold".</div>
+<div><b style="color:var(--ink);font-weight:500">OR</b> — output is 1 when at least one input is 1.</div>
+<div><b style="color:var(--ink);font-weight:500">NOT</b> — flips a single input. Shown here acting on A only.</div>
+<div><b style="color:var(--ink);font-weight:500">NAND / NOR</b> — AND and OR with the output inverted. NAND is called functionally complete: any other gate can be built from NAND gates alone, which is why chip fabrication leans on it.</div>
+<div><b style="color:var(--ink);font-weight:500">XOR</b> — output is 1 when the inputs differ. This is the gate that makes binary addition work.</div>
+<div><b style="color:var(--ink);font-weight:500">XNOR</b> — output is 1 when the inputs match. Useful for equality checks.</div>
+</div></div>
+<footer>Free to use in classrooms. No signup, nothing stored on a server. &middot; <a href="../">More lessons</a></footer></div><script>
+const G=[["AND",(a,b)=>a&&b],["OR",(a,b)=>a||b],["NOT A",(a)=>a?0:1],["NAND",(a,b)=>(a&&b)?0:1],["NOR",(a,b)=>(a||b)?0:1],["XOR",(a,b)=>(a!==b)?1:0],["XNOR",(a,b)=>(a===b)?1:0]];
+let A=0,B=0;
+function styleSw(el,v){el.textContent=v;el.style.width='62px';el.style.height='62px';el.style.fontSize='22px';el.style.fontWeight='700';el.style.borderRadius='50%';
+ el.style.background=v?'var(--teal)':'var(--paper2)';el.style.color=v?'#fff':'var(--ink45)';el.style.borderColor=v?'var(--teal)':'var(--line)'}
+function draw(){
+  styleSw(document.getElementById('A'),A); styleSw(document.getElementById('B'),B);
+  document.getElementById('gates').innerHTML=G.map(([n,f])=>{
+    const o=f(A,B)?1:0;
+    return '<div style="text-align:center;padding:15px 10px;border:1px solid '+(o?'var(--teal)':'var(--line)')+';border-radius:8px;background:'+(o?'rgba(15,110,110,.08)':'var(--paper)')+'">'+
+    '<div style="font-family:var(--m);font-size:11px;letter-spacing:.1em;color:var(--ink45)">'+n+'</div>'+
+    '<div style="font-family:var(--m);font-size:30px;font-weight:700;margin-top:7px;color:'+(o?'var(--teal)':'var(--ink45)')+'">'+o+'</div></div>';
+  }).join('');
+  let h='<table><tr><th>A</th><th>B</th>'+G.map(g=>'<th>'+g[0]+'</th>').join('')+'</tr>';
+  [[0,0],[0,1],[1,0],[1,1]].forEach(([a,b])=>{
+    const on=(a===A&&b===B);
+    h+='<tr style="'+(on?'background:rgba(15,110,110,.09)':'')+'"><td style="font-weight:'+(on?700:400)+'">'+a+'</td><td style="font-weight:'+(on?700:400)+'">'+b+'</td>'+
+    G.map(g=>{const v=g[1](a,b)?1:0;return '<td style="color:'+(v?'var(--teal)':'var(--ink45)')+';font-weight:'+(on?700:400)+'">'+v+'</td>'}).join('')+'</tr>';
+  });
+  document.getElementById('tt').innerHTML=h+'</table>';
+}
+document.getElementById('A').addEventListener('click',()=>{A=A?0:1;draw()});
+document.getElementById('B').addEventListener('click',()=>{B=B?0:1;draw()});
+draw();
+</script></body></html>
