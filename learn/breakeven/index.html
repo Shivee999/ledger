@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Break-Even & Unit Economics Calculator</title><meta name="description" content="Work out contribution margin, break-even units and margin of safety, with the formula shown at every step. For commerce and business students.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBF7F0;--paper2:#F2EBE0;--card:#FFFDF9;--ink:#1B2A2E;--ink70:rgba(27,42,46,.72);--ink45:rgba(27,42,46,.45);
+--line:rgba(27,42,46,.14);--teal:#0F6E6E;--coral:#D9503A;--amber:#C98A1E;--violet:#5B4B9E;
+--d:"Newsreader",Georgia,serif;--b:"Inter",system-ui,sans-serif;--m:"JetBrains Mono",ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--b);font-weight:300;font-size:16px;line-height:1.6;padding-bottom:70px}
+.w{max-width:840px;margin:0 auto;padding:0 20px}
+.back{display:inline-block;margin:26px 0 0;font-family:var(--m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink45);text-decoration:none}
+.back:hover{color:var(--teal)}
+.tag{font-family:var(--m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin-top:22px}
+h1{font-family:var(--d);font-weight:700;font-size:clamp(29px,5.2vw,44px);line-height:1.08;letter-spacing:-.02em;margin-top:8px}
+.lede{margin-top:14px;max-width:60ch;color:var(--ink70);font-size:16px}
+h2{font-family:var(--d);font-weight:600;font-size:21px;margin-bottom:12px}
+.p{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:22px;margin-top:24px;box-shadow:0 1px 2px rgba(27,42,46,.04)}
+.note{display:flex;gap:9px;margin-top:14px;font-size:13px;color:#8A5A12;background:rgba(201,138,30,.09);border:1px solid rgba(201,138,30,.28);padding:11px 13px;border-radius:7px}
+.note b{font-family:var(--m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;padding-top:2px}
+label{font-family:var(--m);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45);display:block;margin-bottom:6px}
+input,select{width:100%;font-family:var(--m);font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--teal);outline-offset:1px}
+button{font-family:var(--m);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:10px 15px;border-radius:5px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink70)}
+button.pri{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:500}
+button:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+table{width:100%;border-collapse:collapse;font-family:var(--m);font-size:13px}
+th{text-align:left;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45);font-weight:500;padding:8px 10px;border-bottom:1.5px solid var(--ink)}
+td{padding:8px 10px;border-bottom:1px solid var(--line)}
+footer{margin-top:36px;font-family:var(--m);font-size:10.5px;color:var(--ink45)}
+footer a{color:var(--ink45)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="w">
+<a class="back" href="../">&larr; Learn index</a>
+<div class="tag">Commerce · Business studies · Class 11-12 & undergraduate</div>
+<h1>When does a business start making money?</h1>
+<p class="lede">Break-even analysis answers one question: how many units must you sell before you stop losing money? Change any number below and every figure recalculates, with the formula shown so you can reproduce it in an exam.</p>
+<div class="p">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
+    <div><label>Selling price / unit</label><input type="number" id="sp" value="500"></div>
+    <div><label>Variable cost / unit</label><input type="number" id="vc" value="300"></div>
+    <div><label>Fixed costs (total)</label><input type="number" id="fc" value="40000"></div>
+    <div><label>Actual units sold</label><input type="number" id="au" value="350"></div>
+  </div>
+  <div id="err" style="color:var(--coral);font-size:13.5px;margin-top:12px;display:none"></div>
+  <div id="res" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:20px"></div>
+</div>
+<div class="p"><h2>The formulas</h2><div id="work" style="font-family:var(--m);font-size:13.5px;line-height:2;color:var(--ink70)"></div></div>
+<div class="p"><h2>What each term means</h2>
+<div style="display:grid;gap:11px;font-size:14.5px;color:var(--ink70)">
+<div><b style="color:var(--ink);font-weight:500">Contribution per unit</b> — what each sale contributes toward covering fixed costs, after its own variable cost is paid. Selling price minus variable cost.</div>
+<div><b style="color:var(--ink);font-weight:500">Break-even point</b> — the sales level where total revenue exactly equals total cost. Profit is zero: not a loss, not a gain.</div>
+<div><b style="color:var(--ink);font-weight:500">Margin of safety</b> — how far sales can fall before you hit break-even. A thin margin means small dips push you into loss.</div>
+<div><b style="color:var(--ink);font-weight:500">P/V ratio</b> — contribution as a percentage of sales. Higher means each rupee of sales does more work covering fixed costs.</div>
+</div>
+<div class="note"><b>Assumptions</b><span>Break-even analysis assumes selling price and variable cost per unit stay constant at every volume, and that costs split cleanly into fixed and variable. Real businesses get bulk discounts, step costs and price changes — so treat this as a planning model, not a prediction.</span></div></div>
+<footer>Free to use in classrooms. No signup, nothing stored on a server. &middot; <a href="../">More lessons</a></footer></div><script>
+const F=["sp","vc","fc","au"];
+function n(id){return parseFloat(document.getElementById(id).value)||0}
+function fmt(x){return x.toLocaleString('en-IN',{maximumFractionDigits:2})}
+function calc(){
+  const sp=n('sp'),vc=n('vc'),fc=n('fc'),au=n('au'),E=document.getElementById('err');
+  const cpu=sp-vc;
+  if(sp<=0){E.textContent='Selling price must be above zero.';E.style.display='block';document.getElementById('res').innerHTML='';document.getElementById('work').innerHTML='';return}
+  if(cpu<=0){E.textContent='Variable cost is at or above the selling price, so every unit sold loses money. There is no break-even point — the price or the cost has to change first.';E.style.display='block';document.getElementById('res').innerHTML='';document.getElementById('work').innerHTML='';return}
+  E.style.display='none';
+  const beu=fc/cpu, bes=beu*sp, pv=cpu/sp*100, prof=(au*cpu)-fc, mos=au-beu, mosp=au>0?mos/au*100:0;
+  const cards=[["Contribution / unit","₹"+fmt(cpu),"var(--teal)"],["Break-even units",fmt(Math.ceil(beu)),"var(--teal)"],
+   ["Break-even sales","₹"+fmt(bes),"var(--teal)"],["P/V ratio",fmt(pv)+"%","var(--violet)"],
+   ["Profit at "+fmt(au)+" units",(prof<0?"−₹":"₹")+fmt(Math.abs(prof)),prof<0?"var(--coral)":"var(--teal)"],
+   ["Margin of safety",fmt(Math.round(mos))+" units ("+fmt(mosp)+"%)",mos<0?"var(--coral)":"var(--amber)"]];
+  document.getElementById('res').innerHTML=cards.map(c=>
+   '<div style="background:var(--card);padding:14px"><div style="font-family:var(--m);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45)">'+c[0]+'</div>'+
+   '<div style="font-family:var(--d);font-weight:700;font-size:22px;margin-top:5px;color:'+c[2]+'">'+c[1]+'</div></div>').join('');
+  document.getElementById('work').innerHTML=
+   'Contribution = Price − Variable cost = <span style="color:var(--teal)">'+fmt(sp)+' − '+fmt(vc)+' = ₹'+fmt(cpu)+'</span><br>'+
+   'Break-even units = Fixed costs ÷ Contribution = <span style="color:var(--teal)">'+fmt(fc)+' ÷ '+fmt(cpu)+' = '+fmt(beu)+'</span> → round up to <span style="color:var(--teal)">'+fmt(Math.ceil(beu))+' units</span><br>'+
+   'Break-even sales = Break-even units × Price = <span style="color:var(--teal)">'+fmt(beu)+' × '+fmt(sp)+' = ₹'+fmt(bes)+'</span><br>'+
+   'P/V ratio = Contribution ÷ Price × 100 = <span style="color:var(--violet)">'+fmt(cpu)+' ÷ '+fmt(sp)+' × 100 = '+fmt(pv)+'%</span><br>'+
+   'Profit = (Units × Contribution) − Fixed costs = <span style="color:'+(prof<0?'var(--coral)':'var(--teal)')+'">('+fmt(au)+' × '+fmt(cpu)+') − '+fmt(fc)+' = ₹'+fmt(prof)+'</span><br>'+
+   'Margin of safety = Actual units − Break-even units = <span style="color:var(--amber)">'+fmt(au)+' − '+fmt(beu)+' = '+fmt(mos)+' units</span>';
+}
+F.forEach(id=>document.getElementById(id).addEventListener('input',calc));
+calc();
+</script></body></html>
