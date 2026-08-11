@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open — things anyone can actually use</title>
+<meta name="description" content="Live public products from DreamKey Automation. No signup required to look, and nothing here needs an account to try.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,500;9..144,700;9..144,900&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0E1930; --navy2:#13223F; --card:#182A4A; --card-line:rgba(244,239,227,.12);
+  --gold:#F0C64B; --gold-dim:rgba(240,198,75,.14);
+  --ink:#F4EFE3; --ink-70:rgba(244,239,227,.72); --ink-45:rgba(244,239,227,.45);
+  --live:#49C98A; --warn:#E8834A;
+  --disp:"Fraunces",Georgia,serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--navy); color:var(--ink); font-family:var(--body); font-weight:300;
+  line-height:1.6; font-size:16px; padding-bottom:90px;
+  background-image:radial-gradient(ellipse 900px 500px at 15% -8%, rgba(240,198,75,.10), transparent 65%);
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+
+.mast{padding:54px 0 8px}
+.badge{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border:1px solid rgba(73,201,138,.45);
+  border-radius:30px;background:rgba(73,201,138,.08);margin-bottom:26px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 0 0 rgba(73,201,138,.6);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(73,201,138,.55)}70%{box-shadow:0 0 0 8px rgba(73,201,138,0)}100%{box-shadow:0 0 0 0 rgba(73,201,138,0)}}
+.badge span{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--live)}
+
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(36px,6.6vw,60px);line-height:1.04;letter-spacing:-.02em;max-width:13ch}
+h1 em{font-style:normal;color:var(--gold)}
+.lede{margin-top:20px;max-width:56ch;font-size:16.5px;color:var(--ink-70)}
+.lede a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(240,198,75,.4)}
+.lede a:hover{border-bottom-color:var(--gold)}
+
+.list{margin-top:44px;border-top:1px solid var(--card-line)}
+.card{
+  display:grid;grid-template-columns:34px 1fr auto;gap:4px 18px;align-items:start;
+  padding:24px 0;border-bottom:1px solid var(--card-line);
+}
+.num{font-family:var(--mono);font-size:12px;color:var(--ink-45);padding-top:5px;font-weight:600}
+.body-col{min-width:0}
+.name{font-family:var(--disp);font-weight:700;font-size:22px;letter-spacing:-.01em}
+.desc{font-size:14.5px;color:var(--ink-70);margin-top:6px;max-width:56ch}
+.caution{
+  display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:12.5px;color:var(--warn);
+  padding:9px 12px;background:rgba(232,131,74,.08);border:1px solid rgba(232,131,74,.28);border-radius:6px;max-width:56ch;
+}
+.caution b{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;padding-top:1px}
+.cta{align-self:center}
+.cta a{
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--navy);background:var(--gold);text-decoration:none;padding:11px 18px;border-radius:4px;
+  font-weight:600;white-space:nowrap;display:inline-block;transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta a:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(240,198,75,.28)}
+.cta a:focus-visible{outline:2.5px solid var(--ink);outline-offset:3px}
+.url{font-family:var(--mono);font-size:10.5px;color:var(--ink-45);margin-top:6px;word-break:break-all;max-width:56ch}
+
+.left-off{
+  margin-top:56px;background:var(--card);border:1px solid var(--card-line);border-radius:8px;padding:26px 24px;
+}
+.left-off h2{font-family:var(--disp);font-weight:700;font-size:16px;margin-bottom:14px}
+.left-off ul{list-style:none;display:grid;gap:10px}
+.left-off li{padding-left:19px;position:relative;font-size:13.5px;color:var(--ink-70)}
+.left-off li::before{content:"–";position:absolute;left:0;color:var(--ink-45);font-family:var(--mono)}
+.left-off li b{color:var(--ink);font-weight:500}
+.left-off a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(240,198,75,.35)}
+
+footer{margin-top:40px;font-family:var(--mono);font-size:11px;color:var(--ink-45);letter-spacing:.03em}
+
+@media(max-width:600px){
+  .card{grid-template-columns:24px 1fr;gap:2px 12px}
+  .cta{grid-column:2;margin-top:10px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="badge"><span class="dot"></span><span>Live · updated 11 Aug 2026</span></div>
+  <h1>Things anyone can <em>just open.</em></h1>
+  <p class="lede">
+    Seven products from DreamKey Automation that are actually public — no account needed to look, nothing here is an internal tool.
+    This is a filtered slice of a larger <a href="https://shivee999.github.io/ledger/" target="_blank" rel="noopener">build ledger</a>,
+    which also holds the business dashboards, drafts and documents that aren't for general use.
+  </p>
+</header>
+
+<main class="list">
+
+  <article class="card">
+    <div class="num">01</div>
+    <div class="body-col">
+      <div class="name">WYRE</div>
+      <div class="desc">Chrome-finish wired earbuds, USB-C or Lightning. ₹1,998, 14-day dispatch, with a real UPI checkout.</div>
+      <div class="url">shivee999.github.io/wyre</div>
+    </div>
+    <div class="cta"><a href="https://shivee999.github.io/wyre/" target="_blank" rel="noopener">Visit →</a></div>
+  </article>
+
+  <article class="card">
+    <div class="num">02</div>
+    <div class="body-col">
+      <div class="name">FITme</div>
+      <div class="desc">A wearable band paired with six AI health specialists — doctor, nutritionist, fitness coach, therapist, pharmacist, sleep coach.</div>
+      <div class="caution"><b>Note</b>Checkout uses a placeholder payment key — a real order may not complete yet.</div>
+      <div class="url">fitmekrazy.netlify.app</div>
+    </div>
+    <div class="cta"><a href="https://fitmekrazy.netlify.app" target="_blank" rel="noopener">Visit →</a></div>
+  </article>
+
+  <article class="card">
+    <div class="num">03</div>
+    <div class="body-col">
+      <div class="name">KrowdCapture</div>
+      <div class="desc">Consent-first face-match photo and video marketplace for live events — find your own shots automatically.</div>
+      <div class="caution"><b>Note</b>Early-access waitlist. The matching app itself isn't live yet.</div>
+      <div class="url">shivee999.github.io/krowdcapture-landing</div>
+    </div>
+    <div class="cta"><a href="https://shivee999.github.io/krowdcapture-landing/" target="_blank" rel="noopener">Visit →</a></div>
+  </article>
+
+  <article class="card">
+    <div class="num">04</div>
+    <div class="body-col">
+      <div class="name">INTENTION</div>
+      <div class="desc">A wearable AI pin concept that remembers your conversations for you.</div>
+      <div class="caution"><b>Note</b>The signup form's email delivery needs a one-time activation step that may not be done — a signup could go nowhere without you knowing.</div>
+      <div class="url">shivee999.github.io/intention-site</div>
+    </div>
+    <div class="cta"><a href="https://shivee999.github.io/intention-site/" target="_blank" rel="noopener">Visit →</a></div>
+  </article>
+
+  <article class="card">
+    <div class="num">05</div>
+    <div class="body-col">
+      <div class="name">Aegis</div>
+      <div class="desc">A safety-tool concept for people at protests — SOS alerts, a plain-language rights guide, a face-blurring camera.</div>
+      <div class="caution"><b>Note</b>This is a concept site, not a working app. Nothing on the page actually sends an alert or calls anyone — it says so on the site itself.</div>
+      <div class="url">shivee999.github.io/aegis-safety</div>
+    </div>
+    <div class="cta"><a href="https://shivee999.github.io/aegis-safety/" target="_blank" rel="noopener">Visit →</a></div>
+  </article>
+
+  <article class="card">
+    <div class="num">06</div>
+    <div class="body-col">
+      <div class="name">Master link hub</div>
+      <div class="desc">The original all-in-one page — every live product and social profile in one place.</div>
+      <div class="url">shivee999.github.io/links</div>
+    </div>
+    <div class="cta"><a href="https://shivee999.github.io/links/" target="_blank" rel="noopener">Visit →</a></div>
+  </article>
+
+  <article class="card">
+    <div class="num">07</div>
+    <div class="body-col">
+      <div class="name">Playlists</div>
+      <div class="desc">Seven Apple Music playlists, open to listen.</div>
+      <div class="url">shivee999.github.io/links/music</div>
+    </div>
+    <div class="cta"><a href="https://shivee999.github.io/links/music/" target="_blank" rel="noopener">Visit →</a></div>
+  </article>
+
+</main>
+
+<section class="left-off">
+  <h2>Left off this page, and why</h2>
+  <ul>
+    <li><b>Business dashboards, decks and internal tools</b> — CELLeb, portfolio and financial dashboards, recruiter/founder pages, Skill Stacks. Built for a specific audience of one or a few, not general use.</li>
+    <li><b>DreamKey Automation's own site</b> — confirmed not resolving as of 23 July. A broken link isn't usable by anyone.</li>
+    <li><b>Dawailelo</b> — technically browsable, but it's blocked on pharmacy licensing, so it isn't a real medicine-delivery service yet. Listing it here without that being obvious felt misleading.</li>
+    <li><b>Code repositories</b> — need a developer to do anything with them, and one is private and can't be opened by anyone else regardless.</li>
+    <li>Everything else lives in the fuller <a href="https://shivee999.github.io/ledger/" target="_blank" rel="noopener">build ledger</a>, which is not meant for public sharing — it contains financial figures, legal drafts and business analysis.</li>
+  </ul>
+</section>
+
+<footer>Compiled 11 Aug 2026 · DreamKey Automation</footer>
+
+</div>
+</body>
+</html>
