@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Build Ledger — DreamKey Automation">
+<meta property="og:description" content="Every artefact built, in two stacks: live public addresses and in-chat work.">
+<title>Build Ledger — every artefact, two stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400;75..100,600;75..100,800&family=IBM+Plex+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#DEDCE8;
+  --paper-2:#D2CFE0;
+  --card:#F2F1F7;
+  --ink:#241C2E;
+  --ink-70:rgba(36,28,46,.70);
+  --ink-45:rgba(36,28,46,.45);
+  --ink-25:rgba(36,28,46,.25);
+  --rule:rgba(36,28,46,.16);
+  --live:#0B6B58;
+  --chat:#4A3B8C;
+  --flag:#B23A18;
+  --disp:"Archivo",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-weight:300;
+  line-height:1.55;
+  font-size:15.5px;
+  padding-bottom:90px;
+  background-image:linear-gradient(180deg,var(--paper-2) 0,var(--paper) 420px);
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.mast{padding:52px 0 26px}
+.stamp{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-45);display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:20px;
+}
+.stamp b{color:var(--ink);font-weight:600}
+.stamp i{width:3px;height:3px;border-radius:50%;background:var(--ink-25);font-style:normal}
+h1{
+  font-family:var(--disp);font-weight:800;font-stretch:88%;
+  font-size:clamp(38px,7.4vw,74px);line-height:.94;letter-spacing:-.025em;
+  text-transform:uppercase;max-width:14ch;
+}
+h1 span{display:block;color:var(--ink-45)}
+.lede{margin-top:22px;max-width:62ch;font-size:16.5px;color:var(--ink-70)}
+.lede strong{font-weight:500;color:var(--ink)}
+.tally{
+  display:flex;gap:0;flex-wrap:wrap;margin:34px 0 0;
+  border-top:1.5px solid var(--ink);border-bottom:1px solid var(--rule);
+}
+.tally div{padding:14px 26px 14px 0;margin-right:26px;border-right:1px solid var(--rule)}
+.tally div:last-child{border-right:0}
+.tally .n{font-family:var(--disp);font-weight:800;font-size:30px;line-height:1;font-stretch:88%}
+.tally .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-45);margin-top:5px}
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);padding:16px 0 12px;border-bottom:1px solid var(--rule);margin-top:30px}
+.stacks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:11px}
+.stk{
+  font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  padding:9px 15px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  cursor:pointer;border-radius:2px;font-weight:600;
+}
+.stk[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.stk:focus-visible{outline:2.5px solid var(--flag);outline-offset:2px}
+.row2{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=search]{
+  flex:1;min-width:180px;font-family:var(--mono);font-size:12px;padding:8px 11px;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:2px;
+}
+input[type=search]:focus-visible{outline:2px solid var(--chat);outline-offset:1px}
+.chip{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:7px 11px;
+  border:1px solid var(--rule);background:transparent;color:var(--ink-70);cursor:pointer;border-radius:2px;
+}
+.chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:var(--card);font-weight:600}
+.chip:focus-visible{outline:2px solid var(--flag);outline-offset:2px}
+.grp{margin-top:38px}
+.grph{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-45);padding-bottom:8px;border-bottom:1.5px solid var(--ink);
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+}
+.grph b{color:var(--ink);font-weight:600}
+.item{
+  display:grid;grid-template-columns:44px 1fr auto;gap:0 16px;align-items:start;
+  padding:15px 0;border-bottom:1px solid var(--rule);
+}
+.idx{font-family:var(--mono);font-size:11px;color:var(--ink-25);padding-top:4px;font-weight:600}
+.mid{min-width:0}
+.tt{font-family:var(--disp);font-weight:600;font-stretch:92%;font-size:17px;line-height:1.25;letter-spacing:-.005em}
+.tt a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--live);padding-bottom:1px}
+.tt a:hover{background:rgba(11,107,88,.10)}
+.tt a:focus-visible{outline:2.5px solid var(--flag);outline-offset:3px}
+.meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-45);margin-top:5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.meta em{font-style:normal;color:var(--ink-70);font-weight:600}
+.dsc{font-size:14px;color:var(--ink-70);margin-top:6px;max-width:74ch}
+.url{font-family:var(--mono);font-size:11px;margin-top:7px;word-break:break-all}
+.url a{color:var(--live);text-decoration:none;border-bottom:1px solid rgba(11,107,88,.35)}
+.url a:hover{border-bottom-color:var(--live)}
+.src{padding-top:3px;text-align:right}
+.src a{
+  font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--chat);text-decoration:none;border:1px solid rgba(74,59,140,.35);
+  padding:6px 9px;border-radius:2px;white-space:nowrap;display:inline-block;
+}
+.src a:hover{background:rgba(74,59,140,.09);border-color:var(--chat)}
+.src a:focus-visible{outline:2.5px solid var(--flag);outline-offset:2px}
+.warn{
+  font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--flag);
+  margin-top:7px;padding-left:11px;border-left:2px solid var(--flag);
+}
+.empty{padding:44px 0;font-family:var(--mono);font-size:12px;color:var(--ink-45)}
+.note{margin-top:56px;background:var(--card);border:1.5px solid var(--ink);border-radius:2px;padding:26px 24px}
+.note h2{font-family:var(--disp);font-weight:800;font-stretch:88%;text-transform:uppercase;font-size:15px;letter-spacing:.04em;margin-bottom:14px}
+.note ul{list-style:none;display:grid;gap:11px}
+.note li{padding-left:20px;position:relative;font-size:14.5px;color:var(--ink-70)}
+.note li::before{content:"—";position:absolute;left:0;color:var(--flag);font-family:var(--mono)}
+.note li b{color:var(--ink);font-weight:500}
+@media(max-width:640px){
+  .item{grid-template-columns:28px 1fr;gap:0 11px}
+  .src{grid-column:2;text-align:left;padding-top:9px}
+  .tally div{padding-right:16px;margin-right:16px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="stamp">
+    <b>Build ledger</b><i></i><span>compiled 11 Aug 2026</span><i></i>
+    <span>Shivendra Singh · DreamKey Automation</span>
+  </div>
+  <h1>Everything we<br>built<span>two stacks</span></h1>
+  <p class="lede">
+    <strong>Stack 01</strong> is work that lives at a real public address — open it, share it, it stays up.
+    <strong>Stack 02</strong> is work that lives inside a conversation: dashboards, decks, code bundles, documents.
+    Those have no standalone address, so each row links to the chat that holds it.
+  </p>
+
+  <div class="tally">
+    <div><div class="n" id="tA">0</div><div class="l">Live addresses</div></div>
+    <div><div class="n" id="tB">0</div><div class="l">In-chat artefacts</div></div>
+    <div><div class="n" id="tT">0</div><div class="l">Total logged</div></div>
+    <div><div class="n" id="tC">0</div><div class="l">Source chats</div></div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="stacks">
+    <button class="stk" data-s="A" aria-pressed="true">Stack 01 · Live</button>
+    <button class="stk" data-s="B" aria-pressed="false">Stack 02 · In chat</button>
+    <button class="stk" data-s="ALL" aria-pressed="false">Both</button>
+  </div>
+  <div class="row2">
+    <input type="search" id="q" placeholder="Search by name, venture or type…" aria-label="Search artefacts">
+    <button class="chip" data-f="all" aria-pressed="true">All types</button>
+    <button class="chip" data-f="Site" aria-pressed="false">Sites</button>
+    <button class="chip" data-f="Dashboard" aria-pressed="false">Dashboards</button>
+    <button class="chip" data-f="Code" aria-pressed="false">Code</button>
+    <button class="chip" data-f="Document" aria-pressed="false">Docs &amp; decks</button>
+    <button class="chip" data-f="Media" aria-pressed="false">Media</button>
+    <button class="chip" data-f="Automation" aria-pressed="false">Automation</button>
+  </div>
+</div>
+
+<main id="out"></main>
+
+<section class="note">
+  <h2>Read this before you trust the list</h2>
+  <ul>
+    <li><b>Artefacts have no individual links.</b> There is no per-artefact URL that can be generated. Stack 01 rows carry genuine public URLs because those things were deployed to GitHub or Netlify. Stack 02 rows link to the conversation — open it and scroll to find the file. Those chat links only open for the account that owns them.</li>
+    <li><b>The window is shorter than 90 days.</b> The chat-listing tool returned nothing before 1 August 2026. Keyword search reaches further back, so June items are included, but only ones searched for by name. Ventures never searched for may be missing.</li>
+    <li><b>The live URLs were not opened during compilation.</b> The build sandbox blocks <span style="font-family:var(--mono);font-size:12px">*.github.io</span> and <span style="font-family:var(--mono);font-size:12px">*.netlify.app</span>. Every Stack 01 address is transcribed from session records, not confirmed as serving today.</li>
+    <li><b>Sandbox files are gone.</b> Rendered MP4s, ZIPs and PNGs were written to temporary sandboxes that reset between sessions. If they were not downloaded at the time, the row is a record that it existed — not a retrievable file.</li>
+    <li><b>Counts are what was found, not what exists.</b> Treat this as a working index to correct, not a complete audit.</li>
+  </ul>
+</section>
+
+</div>
+
+<script>
+const D=[
+{s:"A",t:"Master link hub",v:"Personal",ty:"Site",u:"https://shivee999.github.io/links/",d:"Central bio-link page. Vertical spine with animated signal pulse, screenshot thumbnails per product.",c:"8ac4adcf-26e6-42c9-a7e4-ead1dca9eb99"},
+{s:"A",t:"Playlists page",v:"Personal",ty:"Site",u:"https://shivee999.github.io/links/music/",d:"Seven Apple Music playlists with real cover art pulled from Apple's artwork API.",c:"8ac4adcf-26e6-42c9-a7e4-ead1dca9eb99"},
+{s:"A",t:"Work — call sheet",v:"DreamKey",ty:"Site",u:"https://shivee999.github.io/work/",d:"Founder-and-client facing portfolio page.",c:"ba98dc88-cd44-4630-925c-5c0b71258765"},
+{s:"A",t:"Work — creative cut",v:"DreamKey",ty:"Site",u:"https://shivee999.github.io/work/creative/",d:"Recruiter-facing page. 16 rows, AI and visual work first, then motion, then live sites.",c:"ba98dc88-cd44-4630-925c-5c0b71258765"},
+{s:"A",t:"INTENTION site",v:"INTENTION",ty:"Site",u:"https://shivee999.github.io/intention-site/",d:"Three.js particle field, OG cards, mobile breakpoint, sticky claim bar, FormSubmit signup.",c:"4789878b-ce94-436e-8741-da0b9450b27b",w:"FormSubmit still needs its one-time activation click or signups go nowhere."},
+{s:"A",t:"Aegis site",v:"Aegis",ty:"Site",u:"https://shivee999.github.io/aegis-safety/",d:"Protest-safety app site with an explicit built-vs-not-built status section.",c:"b1bbeee6-658a-47fe-b75b-de2ac05c86fd"},
+{s:"A",t:"CELLeb dashboard",v:"CELLeb",ty:"Site",u:"https://shivee999.github.io/celleb-dashboard/",d:"Landing, Marquee command centre and app wireframe, three linked pages.",c:"b63637aa-ff15-4b41-8437-0f336ee6d052"},
+{s:"A",t:"CELLeb preview",v:"CELLeb",ty:"Site",u:"https://shivee999.github.io/celleb-preview/",d:"Preview deployment noted in the portfolio audit.",c:"ba98dc88-cd44-4630-925c-5c0b71258765"},
+{s:"A",t:"WYRE store",v:"WYRE",ty:"Site",u:"https://shivee999.github.io/wyre/",d:"Chrome earbuds pre-order. 12-tile CSS hero assembly, USB-C / Lightning switcher, ₹1,998, UPI.",c:"a0c3500b-5dd6-4573-875f-b04d591d884f",w:"Lifestyle section still has no photograph — needs roughly 21 more tiles."},
+{s:"A",t:"Chrome Buds store",v:"WYRE",ty:"Site",u:"https://shivee999.github.io/chrome-buds-store/",d:"Earlier earbuds store build with compatibility table and UPI QR.",c:"a0c3500b-5dd6-4573-875f-b04d591d884f"},
+{s:"A",t:"KrowdCapture landing",v:"KrowdCapture",ty:"Site",u:"https://shivee999.github.io/krowdcapture-landing/",d:"Early-access capture page.",c:"32de8692-0ccb-4a4e-a704-331ee7bfd445"},
+{s:"A",t:"Skill Stacks",v:"Skill Stacks",ty:"Site",u:"https://shivee999.github.io/skill-stacks",d:"Listed in the portfolio audit as deployed.",c:"ba98dc88-cd44-4630-925c-5c0b71258765"},
+{s:"A",t:"FITme site",v:"FITme",ty:"Site",u:"https://fitmekrazy.netlify.app",d:"Editorial rebuild. Scroll-drawn EKG spine, word-by-word manifesto scrub, band parallax, health-ring counter.",c:"11099e0f-88f7-4da8-ad79-51d925c5b85c",w:"Razorpay checkout key is a placeholder — replace before taking money."},
+{s:"A",t:"KrowdCapture site",v:"KrowdCapture",ty:"Site",u:"https://krowd-capture.netlify.app/?v=2",d:"Netlify deployment.",c:"ba98dc88-cd44-4630-925c-5c0b71258765"},
+{s:"A",t:"DreamKey Automation",v:"DreamKey",ty:"Site",u:"https://dreamkeyautomation.in",d:"Agency site. Three.js meteor field, sales-psychology copy, SEO and schema pass. Cloudflare nameservers.",c:"34e7e23a-296b-4d57-af1b-b8013b58762f",w:"Confirmed NOT resolving on 23 Jul 2026. Check the domain before sharing this anywhere."},
+{s:"A",t:"Germany relocation dashboard",v:"Germany",ty:"Site",u:"https://shivee999.github.io/germany/",d:"Student permit, §21 self-employment, Berlin entity. 28 documents, 16 on critical path, deadline countdown.",c:"cd8e2e88-eade-4312-a0cf-3bd7f09bac77",w:"This was never pushed from the session — deploy instructions were handed over. Confirm the repo exists."},
+{s:"A",t:"Dawailelo web build",v:"Dawailelo",ty:"Site",u:"https://dawailelo-med-link.base44.app",d:"Base44 deployment built separately — auth, AI pharmacist page, articles.",c:"d2f8ec7c-50cd-4a1b-9bf3-046720d37a85"},
+{s:"A",t:"ULTIMARON- repo",v:"RUHI",ty:"Code",u:"https://github.com/Shivee999/ULTIMARON-",d:"The working multi-agent scaffold. Planner → subagent → vault lookup pipeline runs; no LLM wired in.",c:"ba2b3dd1-8803-4c87-a600-51ae7b266403",w:"The correctly-spelled ULTIMATRON repo is empty. This typo'd one is the real code."},
+
+{s:"B",t:"DPDP exposure register",v:"Portfolio",ty:"Dashboard",d:"All 21 ventures mapped against DPDP risk. Finding: the education stack, not KrowdCapture, is the biggest exposure.",c:"713661c0-28e7-4bb0-b842-cb254d154bc2"},
+{s:"B",t:"iOS 27 beta feature dashboard",v:"Research",ty:"Dashboard",d:"61 features, filterable, with a hardware selector that greys out what the device cannot run.",c:"161b75c0-1124-4ddd-ad20-21c3d7cb0d35"},
+{s:"B",t:"Xcode-on-Windows path finder",v:"Tooling",ty:"Dashboard",d:"Two dashboards: four routes to building iOS on the ASUS, then xtool and Xcode Cloud step-by-step.",c:"b0436cb9-4098-4e69-bbf8-45e9a8fa050e"},
+{s:"B",t:"App Store launch checklist",v:"FITme · Krowd",ty:"Dashboard",d:"Seven phases, clickable progress, with callouts for Krowd's biometrics and FITme's medical disclaimers.",c:"b0436cb9-4098-4e69-bbf8-45e9a8fa050e"},
+{s:"B",t:"FDE Command Center",v:"DreamKey",ty:"Dashboard",d:"React dashboard: lean roadmap, live $1M maths calculator, channel breakdown, discovery qualifier, delivery SOP.",c:"43ef2aee-4a09-4ea9-8497-84dfdd5ce615"},
+{s:"B",t:"FDE Cycle Visual Atlas",v:"DreamKey",ty:"Dashboard",d:"25 diagrammatic lenses across flowchart, state machine, directed graph and sequence categories.",c:"43ef2aee-4a09-4ea9-8497-84dfdd5ce615"},
+{s:"B",t:"Fetch-Decode-Execute atlas",v:"Study",ty:"Dashboard",d:"CPU architecture study set plus a 10-module reference with live-rendered Mermaid diagrams.",c:"43ef2aee-4a09-4ea9-8497-84dfdd5ce615"},
+{s:"B",t:"FDE prospect list",v:"DreamKey",ty:"Document",d:"~130 named companies across US, UK and Europe showing signals of needing embedded AI-deployment help.",c:"43ef2aee-4a09-4ea9-8497-84dfdd5ce615"},
+{s:"B",t:"Germany documents dashboard",v:"Germany",ty:"Dashboard",d:"Standalone checklist build plus the third Documents tab added to the combined site. Rendered to PNG, JPG and PDF.",c:"cd8e2e88-eade-4312-a0cf-3bd7f09bac77"},
+{s:"B",t:"IELTS preparation report",v:"Germany",ty:"Document",d:"Cambridge books, IDP fees, band criteria, free and paid resources, plus MOI / TOEFL / PTE alternatives.",c:"cd8e2e88-eade-4312-a0cf-3bd7f09bac77"},
+{s:"B",t:"AI playlist teardown",v:"Knowledge",ty:"Dashboard",d:"7-video creator playlist: what each teaches, every tool named, mapped to the ventures.",c:"dc9bbe2a-da2d-428b-90bf-4880d1f264de"},
+{s:"B",t:"CampusX LangChain course map",v:"Knowledge",ty:"Dashboard",d:"21-video GenAI course dashboard with venture application mapping.",c:"dc9bbe2a-da2d-428b-90bf-4880d1f264de"},
+{s:"B",t:"Linear algebra / imaging set",v:"Knowledge",ty:"Dashboard",d:"Five forwarded videos framed as the maths under Krowd's face matching and FITme's medicine scanning.",c:"dc9bbe2a-da2d-428b-90bf-4880d1f264de"},
+{s:"B",t:"Venture progress tracker",v:"Portfolio",ty:"Dashboard",d:"Ten ventures scored on build % versus live % — the gap is the execution debt.",c:"34e7e23a-296b-4d57-af1b-b8013b58762f"},
+{s:"B",t:"Instagram competitor teardown",v:"College Mantra",ty:"Dashboard",d:"A competitor account analysed with provenance chips per figure and a manual reach calculator.",c:"4c289f77-781e-49b3-9897-d47d20b79c09"},
+{s:"B",t:"30-day face-on reel plan",v:"Personal brand",ty:"Dashboard",d:"30 reels in shooting order: hook, two swap hooks, timed beat sheet, shot notes, caption, one CTA.",c:"c0f811dd-f6ba-4928-b157-63feeb908327"},
+{s:"B",t:"Growth marketing playbook",v:"KrowdCapture",ty:"Dashboard",d:"173+ tactics across waitlist, build-in-public, viral loops, event partnerships, sponsor sales, 75 post ideas.",c:"32de8692-0ccb-4a4e-a704-331ee7bfd445"},
+{s:"B",t:"Reel scripts dashboard",v:"KrowdCapture",ty:"Dashboard",d:"Six production-ready shot-by-shot scripts.",c:"32de8692-0ccb-4a4e-a704-331ee7bfd445"},
+{s:"B",t:"Instagram monetisation set",v:"Personal brand",ty:"Dashboard",d:"Monetisation dashboard, virality checklist against Meta's 2026 signals, and a 30-day growth plan.",c:"32de8692-0ccb-4a4e-a704-331ee7bfd445"},
+{s:"B",t:"WING'D launch countdown",v:"Client",ty:"Dashboard",d:"Three-day launch checklist plus a services menu for upsell. Concept site also built.",c:"32de8692-0ccb-4a4e-a704-331ee7bfd445"},
+{s:"B",t:"FITme × Warriors master board",v:"FITme",ty:"Dashboard",d:"Partnership tracker, 90-day plan, equity and dilution explained in plain language.",c:"11099e0f-88f7-4da8-ad79-51d925c5b85c"},
+{s:"B",t:"FITme unit economics",v:"FITme",ty:"Dashboard",d:"True all-in cost and real margin per unit, correcting an earlier overstated figure.",c:"11099e0f-88f7-4da8-ad79-51d925c5b85c"},
+{s:"B",t:"Kundli dashboard",v:"Personal",ty:"Dashboard",d:"Swiss Ephemeris natal chart, North Indian SVG, Vimshottari timeline, live Ashtakoot matcher.",c:"40b659ab-c438-4d8b-8c02-d91f882fd159"},
+{s:"B",t:"Kundli explained",v:"Personal",ty:"Dashboard",d:"Plain-language companion with a 360° zodiac strip and an honest astronomy-versus-claims section.",c:"40b659ab-c438-4d8b-8c02-d91f882fd159"},
+{s:"B",t:"Madhuvan financial dashboard",v:"Hotel Madhuvan",ty:"Dashboard",d:"React model: baseline versus post-automation across rooms, occupancy and ADR assumptions.",c:"9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"},
+{s:"B",t:"Reel Intelligence dashboard",v:"Content",ty:"Dashboard",d:"Competitor Reels pipeline and dashboard. Built, but not yet pointed at any accounts.",c:"13a019a0-c424-40da-b63d-1e889bf0bf26"},
+{s:"B",t:"BUDDY v2",v:"BUDDY",ty:"Code",d:"React app with system persona, DreamKey context and an MCP connector grid.",c:"13a019a0-c424-40da-b63d-1e889bf0bf26"},
+
+{s:"B",t:"Madhuvan n8n workflow pack",v:"Hotel Madhuvan",ty:"Automation",d:"Five importable JSONs: WhatsApp booking desk, OTA recapture, banquet scoring, digital check-in, restaurant forecasting.",c:"9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"},
+{s:"B",t:"Madhuvan Airtable schema",v:"Hotel Madhuvan",ty:"Automation",d:"Five tables with field-level access guidance and DPDP notes.",c:"9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"},
+{s:"B",t:"WhatsApp template set",v:"Hotel Madhuvan",ty:"Automation",d:"Six Meta-approval-formatted templates in Hindi and English with correct category classification.",c:"9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"},
+{s:"B",t:"Madhuvan setup runbook",v:"Hotel Madhuvan",ty:"Document",d:"Credentials, four-week rollout, monthly running costs, and honest blockers.",c:"9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"},
+{s:"B",t:"Madhuvan data request workbook",v:"Hotel Madhuvan",ty:"Document",d:"Eight-sheet XLSX: P&L, room metrics, channel attribution, F&B costs, banquet log, payroll, balance sheet, leakage tests.",c:"9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"},
+{s:"B",t:"HEERA Paytm n8n workflow",v:"HEERA",ty:"Automation",d:"Importable order-creation workflow. Needs merchant credentials and a checksum step.",c:"fe392365-7439-4fc3-900d-b01b3d987f70"},
+
+{s:"B",t:"Mutual NDA",v:"DreamKey",ty:"Document",d:"Five-page print-and-sign PDF. No reverse-engineering, no competing-product clause, DPDP handling, Mumbai arbitration.",c:"f2bd8e5a-4712-4a64-b1f2-7b465d0ee5fc",w:"Not lawyer-reviewed. Get an advocate to read it once before high-stakes use."},
+{s:"B",t:"SHIVE.OS animated CV",v:"Personal",ty:"Site",d:"Cinematic single-page site: scramble-decode hero, node-graph skill stack, boot bars per venture, plus an eight-scene self-playing reel.",c:"55c471e8-eb85-4e58-a9c2-c5bfac5255ca"},
+{s:"B",t:"CV — HTML and PDF",v:"Personal",ty:"Document",d:"Investor-first rewrite, corrected education, 14 ventures with honest LIVE / NOT LIVE status tags.",c:"55c471e8-eb85-4e58-a9c2-c5bfac5255ca"},
+{s:"B",t:"Founder's Office resume",v:"Personal",ty:"Document",d:"DOCX positioning the applicant as an operating partner rather than an intern.",c:"66610831-ee0c-4af3-afd8-3c9e0e772e2c"},
+{s:"B",t:"Duplicate mark sheet letter",v:"Personal",ty:"Document",d:"Formal ICSE application to the principal with a particulars table and enclosures list.",c:"89effa1a-d69a-47c8-8b3d-efab66746699"},
+{s:"B",t:"FITme investor deck",v:"FITme",ty:"Document",d:"PPTX deck, plus partnership decks for two creator tracks.",c:"11099e0f-88f7-4da8-ad79-51d925c5b85c"},
+{s:"B",t:"Aegis pitch deck",v:"Aegis",ty:"Document",d:"13 dark-themed slides with speaker notes, a sponsor-not-owner argument and a risk-compliance slide.",c:"b1bbeee6-658a-47fe-b75b-de2ac05c86fd"},
+{s:"B",t:"Madhuvan owner proposal",v:"Hotel Madhuvan",ty:"Document",d:"12 slides, indigo and marigold, revenue chart, 10-year projection, and a deliberate 'what this does not do' slide.",c:"9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"},
+{s:"B",t:"Outreach deck set",v:"KrowdCapture",ty:"Document",d:"Creator and page partnership decks, plus a freelancer-versus-agency comparison.",c:"32de8692-0ccb-4a4e-a704-331ee7bfd445"},
+{s:"B",t:"Business model portfolio PDF",v:"Portfolio",ty:"Document",d:"Full venture portfolio with co-founder pitch, % complete, revenue model and ICP per venture.",c:"682467a9-8c16-4e0d-aff5-0751c7d26252"},
+{s:"B",t:"CELLeb product spec",v:"CELLeb",ty:"Document",d:"v0.1 — positioning, two-sided onboarding, commission tiers, ASCI and data-privacy flags, competitive landscape.",c:"b63637aa-ff15-4b41-8437-0f336ee6d052"},
+{s:"B",t:"AI video stack reference",v:"Tooling",ty:"Document",d:"Ten tools verified against the ASUS: install paths, caveats, order. One ruled out, one routed via API.",c:"19a609f9-d5fc-4e60-93d2-f716e2478c29"},
+
+{s:"B",t:"NEXUS Phase 1",v:"NEXUS",ty:"Code",d:"Spatial computing shell. Next.js 15, React 19, Three.js, MediaPipe hand tracking. Passed install, tsc, build and smoke test.",c:"b58637e3-5deb-4254-94cf-ada7080f82fe"},
+{s:"B",t:"FITme iOS app",v:"FITme",ty:"Code",d:"SwiftUI Phases 1A–1E: dashboard, AI Doctor, nutrition, fitness, mental health, StoreKit 2 subscription.",c:"11099e0f-88f7-4da8-ad79-51d925c5b85c"},
+{s:"B",t:"FITme Android app",v:"FITme",ty:"Code",d:"Jetpack Compose Phase 1A with the health score calculator ported line-for-line from iOS.",c:"11099e0f-88f7-4da8-ad79-51d925c5b85c"},
+{s:"B",t:"FITme BLE managers",v:"FITme",ty:"Code",d:"Swift and Kotlin managers for a direct band connection, replacing HealthKit.",c:"11099e0f-88f7-4da8-ad79-51d925c5b85c",w:"UUIDs are placeholders. Nothing works until the supplier sends the real GATT profile."},
+{s:"B",t:"HEERA iOS launch bundle",v:"HEERA",ty:"Code",d:"React Native app, 21 products across two collections, pinch-zoom detail, live price calculator, Paytm checkout.",c:"fe392365-7439-4fc3-900d-b01b3d987f70",w:"Blocked on Apple Developer enrollment; the n8n webhook is still a placeholder."},
+{s:"B",t:"Dawailelo app",v:"Dawailelo",ty:"Code",d:"React Native + Expo + TypeScript. Rx gate at checkout, Zustand cart, order tracking. Plus a builder skill file.",c:"d2f8ec7c-50cd-4a1b-9bf3-046720d37a85"},
+{s:"B",t:"Aegis prototype",v:"Aegis",ty:"Code",d:"React component: hold-to-confirm SOS, mesh relay toggle, verified/unconfirmed feed labels, face-blur demo.",c:"b1bbeee6-658a-47fe-b75b-de2ac05c86fd"},
+{s:"B",t:"Solana arbitrage scanner",v:"Learning",ty:"Code",d:"Phase 0, read-only Python. Jupiter quotes, round-trip simulation, CSV logging. No wallet, no keys.",c:"979b2575-4a9e-4dd7-8cf2-a347c43a1a80",w:"Never live-tested — the sandbox cannot reach Solana endpoints."},
+{s:"B",t:"Subs Tracker",v:"Tooling",ty:"Code",d:"iOS SwiftUI + SwiftData subscription manager built 13 June. Local storage only.",c:"c53d9943-dabc-44f7-9065-434fb8079cfa",w:"The subscriptions shown in it were invented placeholders, not real ones."},
+{s:"B",t:"BMYB companion app",v:"BMYB",ty:"Code",d:"React app: discover, chat via Anthropic API, four subscription tiers, UPI flow with UTR verification.",c:"bd012415-e272-49f9-b3a8-b60795b2ec0e"},
+{s:"B",t:"CELLeb app wireframe",v:"CELLeb",ty:"Code",d:"Brand portal, creator portal and a live commission calculator with sliders.",c:"b63637aa-ff15-4b41-8437-0f336ee6d052"},
+
+{s:"B",t:"Chibi avatar V3",v:"Personal brand",ty:"Media",d:"Animated SVG walk cycle, four hand-sign poses, neon Mumbai skyline, plus PNG / WebM / sticker / PFP export buttons.",c:"0feeb7a1-633f-4d24-b053-2abd2931950b"},
+{s:"B",t:"Web-shooter overlay",v:"Content",ty:"Media",d:"30-second 1080×1920 overlay in two formats — screen-blend MP4 for mobile editors, true-alpha WebM for desktop.",c:"2af15e9b-b978-4fba-9fb2-b7edaaad25b5"},
+{s:"B",t:"Birthday posters",v:"Outreach",ty:"Media",d:"Three finished PNGs — four-photo hero stack, portrait poster, mission-quote on red.",c:"c6833cfc-cfbf-4144-b474-5e2958b9b13d"},
+{s:"B",t:"Co-founder recruitment set",v:"DreamKey",ty:"Media",d:"Seven Instagram graphics across five concepts, with matching copy-paste captions.",c:"44201c07-9463-4a09-9190-eec75298dcfb"},
+{s:"B",t:"College Mantra course film",v:"College Mantra",ty:"Media",d:"Self-playing cinematic player. 16-second chapter per course, Ken Burns drift, letter-by-letter forging, top-10 college reveals.",c:"cf7df07d-5e4b-49a8-96ee-912e1a8bcdcd",w:"Needs 95 college images and 10 opening shots supplied; falls back to monogram plates."},
+{s:"B",t:"KrowdCapture reel cuts",v:"KrowdCapture",ty:"Media",d:"Six vertical 1080×1920 edits — three Hindi/Hinglish phonk brand cuts, three English launch cuts — plus a 21-second concept demo.",c:"ba98dc88-cd44-4630-925c-5c0b71258765",w:"Rendered in sandboxes that have since reset. Gone unless downloaded at the time."},
+{s:"B",t:"E-reader unit economics",v:"Research",ty:"Document",d:"Three scenarios costed across custom manufacturing, ODM white-label and import sourcing, with MOI thresholds.",c:"73207823-b99e-4f5c-83ae-66fce6ac9362"}
+];
+
+const out=document.getElementById('out');
+let stack="A", filt="all", q="";
+
+const GROUPS=["Site","Dashboard","Automation","Document","Code","Media"];
+const GNAME={Site:"Deployed sites",Dashboard:"Dashboards & consoles",Automation:"Automation & workflows",Document:"Documents, decks & reports",Code:"Code & app builds",Media:"Motion, graphics & video"};
+
+function esc(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+
+function render(){
+  const list=D.filter(x=>{
+    if(stack!=="ALL" && x.s!==stack) return false;
+    if(filt!=="all" && x.ty!==filt) return false;
+    if(q){
+      const hay=(x.t+" "+x.v+" "+x.ty+" "+(x.d||"")).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('tA').textContent=D.filter(x=>x.s==="A").length;
+  document.getElementById('tB').textContent=D.filter(x=>x.s==="B").length;
+  document.getElementById('tT').textContent=D.length;
+  document.getElementById('tC').textContent=new Set(D.map(x=>x.c)).size;
+
+  if(!list.length){out.innerHTML='<p class="empty">Nothing matches that. Clear the search or pick another type.</p>';return}
+
+  let html="", n=0;
+  GROUPS.forEach(g=>{
+    const rows=list.filter(x=>x.ty===g);
+    if(!rows.length) return;
+    html+='<section class="grp"><div class="grph"><span>'+GNAME[g]+'</span><b>'+rows.length+'</b></div>';
+    rows.forEach(x=>{
+      n++;
+      html+='<article class="item">';
+      html+='<div class="idx">'+String(n).padStart(2,'0')+'</div><div class="mid">';
+      html+='<div class="tt">'+(x.u?'<a href="'+esc(x.u)+'" target="_blank" rel="noopener">'+esc(x.t)+'</a>':esc(x.t))+'</div>';
+      html+='<div class="meta"><em>'+esc(x.v)+'</em><span>·</span><span>'+esc(x.ty)+'</span><span>·</span><span>'+(x.s==="A"?"Stack 01":"Stack 02")+'</span></div>';
+      if(x.d) html+='<div class="dsc">'+esc(x.d)+'</div>';
+      if(x.u) html+='<div class="url"><a href="'+esc(x.u)+'" target="_blank" rel="noopener">'+esc(x.u)+'</a></div>';
+      if(x.w) html+='<div class="warn">'+esc(x.w)+'</div>';
+      html+='</div><div class="src"><a href="https://claude.ai/chat/'+esc(x.c)+'" target="_blank" rel="noopener">Open chat</a></div>';
+      html+='</article>';
+    });
+    html+='</section>';
+  });
+  out.innerHTML=html;
+}
+
+document.querySelectorAll('.stk').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.stk').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');stack=b.dataset.s;render();
+  });
+});
+document.querySelectorAll('.chip').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');filt=b.dataset.f;render();
+  });
+});
+document.getElementById('q').addEventListener('input',e=>{q=e.target.value.toLowerCase().trim();render()});
+render();
+</script>
+</body>
+</html>
