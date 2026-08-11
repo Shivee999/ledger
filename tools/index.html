@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Tools — calculators, checklists and explainers</title>
+<meta name="description" content="Three free browser tools: a pre-revenue startup valuation calculator, an iOS App Store launch checklist, and an interactive CPU instruction-cycle explainer. No signup.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0E1930;--card:#182A4A;--line:rgba(244,239,227,.12);--gold:#F0C64B;--ink:#F4EFE3;--ink70:rgba(244,239,227,.72);--ink45:rgba(244,239,227,.45);--live:#49C98A;
+--disp:"Fraunces",Georgia,serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy);color:var(--ink);font-family:var(--body);font-weight:300;line-height:1.6;font-size:16px;padding-bottom:80px;
+background-image:radial-gradient(ellipse 900px 480px at 15% -8%,rgba(240,198,75,.10),transparent 65%)}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+.badge{display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border:1px solid rgba(73,201,138,.45);border-radius:30px;background:rgba(73,201,138,.08);margin:54px 0 26px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--live)}
+.badge span{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--live)}
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(34px,6.2vw,56px);line-height:1.05;letter-spacing:-.02em;max-width:14ch}
+h1 em{font-style:normal;color:var(--gold)}
+.lede{margin-top:18px;max-width:56ch;color:var(--ink70)}
+.lede a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(240,198,75,.4)}
+.grid{margin-top:44px;display:grid;gap:16px}
+.tool{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:26px 24px;transition:border-color .18s,transform .18s}
+.tool:hover{border-color:var(--gold);transform:translateY(-2px)}
+.tool:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px}
+.kind{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.tool h2{font-family:var(--disp);font-weight:700;font-size:23px;margin:9px 0 8px;letter-spacing:-.01em}
+.tool p{font-size:14.5px;color:var(--ink70);max-width:56ch}
+.for{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--ink45)}
+.who{margin-top:52px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px}
+.who h3{font-family:var(--disp);font-weight:700;font-size:16px;margin-bottom:11px}
+.who p{font-size:14px;color:var(--ink70);max-width:62ch}
+.who a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(240,198,75,.35)}
+footer{margin-top:36px;font-family:var(--mono);font-size:11px;color:var(--ink45)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="wrap">
+
+<div class="badge"><span class="dot"></span><span>Free · no signup · nothing stored</span></div>
+<h1>Small tools that <em>do one thing.</em></h1>
+<p class="lede">Built while working on other projects, then stripped of anything specific and left here for anyone. Each runs entirely in your browser — nothing you type is sent anywhere. Also see the <a href="../open/">products</a>.</p>
+
+<div class="grid">
+
+  <a class="tool" href="valuation/">
+    <div class="kind">Calculator</div>
+    <h2>Pre-revenue valuation</h2>
+    <p>What is a startup worth before it has revenue? Score five risk factors with the Berkus method and get an indicative number. Switch between rupees, dollars and euros.</p>
+    <div class="for">For founders prepping a raise, and anyone curious how angels think</div>
+  </a>
+
+  <a class="tool" href="appstore/">
+    <div class="kind">Checklist</div>
+    <h2>iOS App Store launch</h2>
+    <p>Six phases, from choosing a bundle ID you cannot change later to what to watch in the first 48 hours. Includes the privacy and permission steps first-timers get rejected for. Progress saves in your browser.</p>
+    <div class="for">For anyone shipping their first iPhone app</div>
+  </a>
+
+  <a class="tool" href="cpu/">
+    <div class="kind">Interactive explainer</div>
+    <h2>How a CPU runs an instruction</h2>
+    <p>Step through fetch, decode and execute one stage at a time and watch the registers and memory change as a tiny program adds two numbers.</p>
+    <div class="for">For computer science students, and anyone who wants the loop to finally click</div>
+  </a>
+
+</div>
+
+<div class="who">
+  <h3>About these</h3>
+  <p>Made by <a href="https://shivee999.github.io/links/">Shive</a>, who builds AI systems and apps. These started as working tools for real projects, so they are opinionated rather than exhaustive — but everything specific to any one business has been taken out. Free to use and share.</p>
+</div>
+
+<footer>Last updated 11 Aug 2026</footer>
+</div></body></html>
