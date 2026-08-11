@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard Registry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#0C0F11;--panel:#13181B;--panel2:#171D21;--line:#232B30;--line2:#2E383E;
+--txt:#E6EDE9;--dim:#8B9A94;--dim2:#5C6A66;
+--lime:#C6F24E;--cyan:#5EE0D0;--mag:#F2589E;--amber:#F2A93B;--violet:#9B8CF7;--red:#F2685C;
+--d:"Space Grotesk",system-ui,sans-serif;--m:"JetBrains Mono",ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--m);font-size:14px;line-height:1.5;padding-bottom:80px;
+background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+background-size:52px 52px;background-position:-1px -1px;}
+.sheet{background:rgba(12,15,17,.93);min-height:100vh}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+.top{border-bottom:1px solid var(--line2);padding:30px 0 18px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim2)}
+.meta b{color:var(--lime);font-weight:500}
+h1{font-family:var(--d);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1;letter-spacing:-.03em;margin:16px 0 0;text-transform:uppercase}
+h1 span{color:var(--lime)}
+.sub{margin-top:14px;max-width:60ch;color:var(--dim);font-size:13.5px;line-height:1.65}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
+.stat{background:var(--panel);padding:14px 16px}
+.stat .v{font-family:var(--d);font-weight:700;font-size:26px;line-height:1;color:var(--lime)}
+.stat .k{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim2);margin-top:6px}
+
+.rail{position:sticky;top:0;z-index:30;background:rgba(12,15,17,.97);border-bottom:1px solid var(--line2);padding:12px 0;margin-top:22px;backdrop-filter:blur(8px)}
+.rail-in{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.rail-in::-webkit-scrollbar{display:none}
+.f{font-size:10px;letter-spacing:.11em;text-transform:uppercase;padding:8px 13px;border:1px solid var(--line2);
+background:transparent;color:var(--dim);cursor:pointer;white-space:nowrap;border-radius:2px}
+.f[aria-pressed="true"]{color:var(--bg);font-weight:700}
+.f:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+
+.sector{margin-top:40px}
+.sec-h{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--sc,var(--lime))}
+.sec-n{font-family:var(--d);font-weight:700;font-size:19px;letter-spacing:-.01em;text-transform:uppercase}
+.sec-c{font-size:10px;letter-spacing:.14em;color:var(--dim2);margin-left:auto}
+.sec-d{font-size:12px;color:var(--dim2);margin-top:9px;max-width:66ch;line-height:1.6}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:16px}
+.mod{background:var(--panel);padding:16px;display:flex;flex-direction:column;gap:8px;position:relative;transition:background .15s}
+.mod:hover{background:var(--panel2)}
+.mod::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--sc,var(--lime));opacity:.65}
+.mn{font-family:var(--d);font-weight:500;font-size:15px;line-height:1.25;letter-spacing:-.01em;padding-left:8px}
+.md{font-size:12px;color:var(--dim);line-height:1.6;padding-left:8px;flex:1}
+.mf{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-left:8px;margin-top:2px}
+.chip{font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid;white-space:nowrap}
+.c-live{color:var(--lime);border-color:rgba(198,242,78,.4);background:rgba(198,242,78,.07)}
+.c-chat{color:var(--cyan);border-color:rgba(94,224,208,.35);background:rgba(94,224,208,.06)}
+.c-gone{color:var(--red);border-color:rgba(242,104,92,.35);background:rgba(242,104,92,.06)}
+.open{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim2);text-decoration:none;border-bottom:1px solid var(--line2)}
+.open:hover{color:var(--lime);border-color:var(--lime)}
+.open:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+
+.foot{margin-top:52px;border:1px solid var(--line2);background:var(--panel);padding:22px 20px}
+.foot h2{font-family:var(--d);font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.foot ul{list-style:none;display:grid;gap:9px}
+.foot li{font-size:12.5px;color:var(--dim);padding-left:16px;position:relative;line-height:1.65}
+.foot li::before{content:"›";position:absolute;left:0;color:var(--amber)}
+.foot li b{color:var(--txt);font-weight:500}
+.foot a{color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(198,242,78,.3)}
+.end{margin-top:26px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim2)}
+.end a{color:var(--dim2)}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="sheet"><div class="wrap">
+
+<div class="top">
+  <div class="meta"><b>Dashboard registry</b><span>//</span><span>compiled 11 Aug 2026</span><span>//</span><span>internal</span></div>
+  <h1>Every dashboard,<br><span>one board.</span></h1>
+  <p class="sub">Every dashboard, tracker and command deck built across roughly two months, sorted into six sectors that have nothing to do with each other. <b style="color:var(--lime);font-weight:500">Counts below are computed from the list itself, not typed in.</b> Each one lives inside the conversation that produced it — none are standing files, so the action on all of them is rebuild, not download.</p>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="rail"><div class="rail-in" id="rail"></div></div>
+
+<main id="out"></main>
+
+<section class="foot">
+  <h2>What this board is not</h2>
+  <ul>
+    <li><b>These are not files.</b> Every dashboard here was rendered inside a chat. Nothing was written to a server, so there is no download link and nothing to host. Opening the chat and rebuilding is the only route to a working copy.</li>
+    <li><b>Some are genuinely gone.</b> Anything rendered into a temporary sandbox — the HTML exports, the command deck file — reset when that session ended. If it was not downloaded at the time, it exists as a record here and nowhere else.</li>
+    <li><b>Coverage is keyword-bound.</b> These were found by searching names already known, plus a chat-list screen recording. A dashboard from a chat with a title that matched nothing searched would not appear.</li>
+    <li><b>The numbers inside them have aged.</b> Progress percentages, costs and pipeline figures were true on the day they were built. Treat any figure recalled from these as stale until re-checked.</li>
+    <li>Related: the <a href="../">full 114-item ledger</a>, the <a href="../open/">public products</a>, and the <a href="../tools/">free tools</a>.</li>
+  </ul>
+</section>
+
+<div class="end">Dashboard registry &middot; <a href="../">back to ledger</a></div>
+
+</div></div>
+<script>
+const SEC=[
+ ["ops","Venture command","#C6F24E","Boards built to hold the whole portfolio in one view — progress, scoring, valuation and what to do next."],
+ ["biz","Product & business","#5EE0D0","Boards scoped to a single venture: its economics, its build state, its compliance position."],
+ ["mkt","Marketing & content","#F2589E","Tactic libraries, script banks, competitor teardowns and posting plans."],
+ ["ana","Analytics & pipeline","#F2A93B","Boards reading real data — site traffic, outreach pipeline, tool usage, news feeds."],
+ ["per","Personal systems","#9B8CF7","Daily-use trackers built for one person: routine, health, money, charts."],
+ ["lrn","Learning & reference","#8FA8FF","Study atlases, course maps, setup guides and checklists."]
+];
+
+const D=[
+["ops","DreamKey Mission Control","Cross-project progress command centre spanning FITme, HOPE, DreamKey Automation and the rest. Built inside the BUDDY assistant project.","chat","b4271950-59f4-4371-807d-36ba9b6d9e18"],
+["ops","Master Progress Dashboard","All eight ventures with honest progress percentages, expanded twice — once with setup guidance for twelve platforms, once with Mac-friendly step-by-step guides inside each venture card.","gone","b4271950-59f4-4371-807d-36ba9b6d9e18"],
+["ops","Command Deck","Six-venture proficiency scorecard with per-venture monetisation checklists, status stamps, visit counts and honest next-action prompts.","gone","93e724ed-415f-4b1b-bf90-19fa329e0b5e"],
+["ops","DreamKey AI Operating System","Five tabs — Daily OS, Prompt Builder, Claude Modes, Mastery Map, Commands — built as the agency's working surface.","chat","b4271950-59f4-4371-807d-36ba9b6d9e18"],
+["ops","Launch Playbook Command Deck","Six ventures against a strategy selector, matching each playbook to the venture it actually fits.","chat","414b8cff-0fe8-432f-94ff-89f24eb28b3b"],
+["ops","Strategy playbook atlas","Five growth playbooks scored for fit against every venture, with flow steps and expected outcome per pairing.","chat","414b8cff-0fe8-432f-94ff-89f24eb28b3b"],
+["ops","Venture progress tracker","Ten ventures scored on build percentage versus live percentage. The gap between the two columns is the whole point.","chat","34e7e23a-296b-4d57-af1b-b8013b58762f"],
+["ops","Valuation dashboard","Berkus framework applied per venture with live sliders, a revenue calculator and a one-click medium scenario.","chat","f4b0083b-f957-4080-8d02-7c257b5cdfbe"],
+["ops","Equity and dilution board","Ownership structure across multiple ventures, with dilution maths explained in plain language.","chat","34e7e23a-296b-4d57-af1b-b8013b58762f"],
+
+["biz","DPDP exposure register","All 21 ventures mapped against data-protection risk. The finding that mattered: the education stack, not the biometric product, carried the biggest exposure.","chat","713661c0-28e7-4bb0-b842-cb254d154bc2"],
+["biz","FITme master board","Partnership tracker, 90-day plan, and equity plus dilution written for someone seeing those terms for the first time.","chat","11099e0f-88f7-4da8-ad79-51d925c5b85c"],
+["biz","FITme unit economics","True all-in cost against sale price, correcting an earlier margin figure that had been overstated.","chat","11099e0f-88f7-4da8-ad79-51d925c5b85c"],
+["biz","FITme lean financials","Stripped-down financial model separate from the investor-facing version.","chat","11099e0f-88f7-4da8-ad79-51d925c5b85c"],
+["biz","LockVault progress board","Three states across lock engine, marketplace and compliance. Built twice as the regulatory shape changed.","chat","5284a75a-abc2-4fc4-9c05-bdd8e4632cce"],
+["biz","CELLeb Marquee","Sortable talent roster, brand readiness checklist, terms accordion, agency directory and outreach tracker.","chat","b63637aa-ff15-4b41-8437-0f336ee6d052"],
+["biz","College Mantra board","Four automation pillars with deployed infrastructure honestly counted at zero.","chat","055fa0b5-4c3e-479a-a423-c3426f1bb9f0"],
+["biz","College Mantra cost charts","Subscription and running-cost breakdown rendered as charts.","chat","055fa0b5-4c3e-479a-a423-c3426f1bb9f0"],
+["biz","Hotel financial model","Baseline against post-automation across rooms, occupancy and average rate.","chat","9dd5ceb5-9a2f-4851-a8ce-ddd69f20fa44"],
+["biz","Dune Aroma command centre","Parallel Airtable and Notion calls into one board, desert palette, per-panel error handling.","chat","feb9810d-56cd-44e3-b47f-56ffc4003ccd"],
+["biz","App Store launch checklist","Seven phases with clickable progress, including the medical-disclaimer and biometric-consent callouts.","live","b0436cb9-4098-4e69-bbf8-45e9a8fa050e"],
+["biz","E-reader unit economics","Three sourcing scenarios costed, with the volume threshold where it stops losing money.","chat","73207823-b99e-4f5c-83ae-66fce6ac9362"],
+
+["mkt","Growth tactics library","173-plus tactics across waitlist mechanics, build-in-public, viral loops, event partnerships and sponsor sales, plus 75 post ideas.","chat","32de8692-0ccb-4a4e-a704-331ee7bfd445"],
+["mkt","KrowdCapture tactics board","97 tactics across 15 categories, the earlier and tighter cut of the library above.","chat","32de8692-0ccb-4a4e-a704-331ee7bfd445"],
+["mkt","Reel scripts board","Six production-ready shot-by-shot scripts with timing.","chat","32de8692-0ccb-4a4e-a704-331ee7bfd445"],
+["mkt","Instagram monetisation board","Monetisation routes, a virality checklist against current platform signals, and a 30-day growth plan.","chat","32de8692-0ccb-4a4e-a704-331ee7bfd445"],
+["mkt","30-day face-on reel plan","Thirty reels in shooting order — hook, two swap hooks, timed beat sheet, shot notes, caption, one call to action each.","chat","c0f811dd-f6ba-4928-b157-63feeb908327"],
+["mkt","Competitor teardown","A rival account analysed with a provenance chip on every figure and a manual reach calculator, so nothing reads as more certain than it is.","chat","4c289f77-781e-49b3-9897-d47d20b79c09"],
+["mkt","Marketing playbook","The broad tactics reference the venture-specific boards were cut from.","chat","32de8692-0ccb-4a4e-a704-331ee7bfd445"],
+["mkt","Launch countdown board","Three-day launch checklist plus a services menu built for upsell.","chat","32de8692-0ccb-4a4e-a704-331ee7bfd445"],
+["mkt","Content calendar boards","Long-range posting calendars — a 120-post football run and a separate games-launch calendar — with a script factory behind them.","chat","49e3c002-eb4e-430e-b6bb-b69642ec0269"],
+
+["ana","Website analytics master","Five tabs over real traffic data — overview, traffic, countries, people, site health — with estimated figures labelled apart from measured ones throughout.","chat","f75647dc-5ba3-4788-8d7c-6c236783abfd"],
+["ana","Live site health board","Reads a custom tracker through a webhook rather than showing sample numbers. Built alongside the tracker script and the workflow that feeds it.","chat","f75647dc-5ba3-4788-8d7c-6c236783abfd"],
+["ana","Reel intelligence board","Competitor reel pipeline and dashboard. Built, never pointed at any accounts.","chat","13a019a0-c424-40da-b63d-1e889bf0bf26"],
+["ana","Prospect tracker","Pipeline tracking for warm leads, as a standalone HTML tool.","chat","49e3c002-eb4e-430e-b6bb-b69642ec0269"],
+["ana","Claude usage audit","Proficiency analysis across roughly sixty days, which named the pattern: systems built thoroughly, then left unexecuted.","chat","93e724ed-415f-4b1b-bf90-19fa329e0b5e"],
+["ana","AI news digest","Twenty-eight stories across timeline, category and action views.","chat","b4271950-59f4-4371-807d-36ba9b6d9e18"],
+["ana","Automation workflow board","Six expandable layers walking a business automation stack from trigger to outcome.","chat","b4271950-59f4-4371-807d-36ba9b6d9e18"],
+
+["per","Morning dashboard","Live clock, day-load bar, focus score, an AI morning brief pulling from mail and calendar, and a curated watch list.","chat","b4271950-59f4-4371-807d-36ba9b6d9e18"],
+["per","Goals and habit tracker","Three tabs — daily reflection with energy and mood, goal progress, and a 30-day pattern view with streak heatmaps. Calendar-connected.","chat","682f528b-f04d-4ffb-9252-6cc1038c44f6"],
+["per","Fitness trainer board","Transformation tracker with a phased calorie plan, home workouts and a budget-conscious diet plan.","chat","b4271950-59f4-4371-807d-36ba9b6d9e18"],
+["per","Personal brand pipeline","Revenue opportunity tracker across speaking, podcasts, brand deals and courses, with weighted maths and persistent stages.","chat","67453214-53bc-4098-a86c-449c4056b60d"],
+["per","Subscription tracker","iOS app for tracking recurring spend. Local storage only, nothing leaves the device.","chat","c53d9943-dabc-44f7-9065-434fb8079cfa"],
+["per","Birth chart dashboard","Real ephemeris positions, a traditional chart rendering, a dasha timeline and a live compatibility matcher.","chat","40b659ab-c438-4d8b-8c02-d91f882fd159"],
+["per","Birth chart explainer","The plain-language companion, including an honest section separating the astronomy from the claims.","chat","40b659ab-c438-4d8b-8c02-d91f882fd159"],
+
+["lrn","FDE Command Center","Lean roadmap, a live revenue-target calculator, channel breakdown, discovery qualifier and a delivery procedure.","chat","43ef2aee-4a09-4ea9-8497-84dfdd5ce615"],
+["lrn","FDE visual atlas","Twenty-five diagrammatic lenses across flowchart, state machine, directed graph and sequence forms.","chat","43ef2aee-4a09-4ea9-8497-84dfdd5ce615"],
+["lrn","CPU cycle atlas","Processor architecture study set with a ten-module reference and live-rendered diagrams.","live","43ef2aee-4a09-4ea9-8497-84dfdd5ce615"],
+["lrn","iOS beta feature board","Sixty-one features, filterable, with a hardware selector that greys out anything the chosen device cannot run.","chat","161b75c0-1124-4ddd-ad20-21c3d7cb0d35"],
+["lrn","Build-iOS-on-Windows board","Four routes compared, then the two workable ones written out step by step.","chat","b0436cb9-4098-4e69-bbf8-45e9a8fa050e"],
+["lrn","AI video tooling board","Ten tools verified against one actual machine — install paths, caveats and the order to do them in.","chat","19a609f9-d5fc-4e60-93d2-f716e2478c29"],
+["lrn","Course and playlist maps","Three teardowns — a creator AI playlist, a 21-video LangChain course, and a linear-algebra set framed against real product problems.","chat","dc9bbe2a-da2d-428b-90bf-4880d1f264de"],
+["lrn","Relocation documents board","Twenty-eight documents, sixteen on the critical path, with a deadline countdown.","chat","cd8e2e88-eade-4312-a0cf-3bd7f09bac77"],
+["lrn","Exam accuracy audit","Accuracy breakdown by topic for competitive-exam prep.","chat","b4271950-59f4-4371-807d-36ba9b6d9e18"]
+];
+
+const CH={live:["c-live","Rebuilt live"],chat:["c-chat","In chat"],gone:["c-gone","Sandbox lost"]};
+const LIVE={"App Store launch checklist":"../tools/appstore/","CPU cycle atlas":"../tools/cpu/"};
+let cur="all";
+
+function esc(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+
+document.getElementById('stats').innerHTML=
+ [[D.length,"Dashboards"],[SEC.length,"Sectors"],
+  [D.filter(d=>d[3]==="live").length,"Rebuilt live"],
+  [D.filter(d=>d[3]==="gone").length,"Sandbox lost"],
+  [new Set(D.map(d=>d[4])).size,"Source chats"]]
+ .map(s=>'<div class="stat"><div class="v">'+s[0]+'</div><div class="k">'+s[1]+'</div></div>').join('');
+
+const rail=document.getElementById('rail');
+rail.innerHTML='<button class="f" data-s="all" aria-pressed="true" style="border-color:#C6F24E;background:#C6F24E;color:#0C0F11;font-weight:700">All '+D.length+'</button>'+
+ SEC.map(s=>'<button class="f" data-s="'+s[0]+'" aria-pressed="false" data-c="'+s[2]+'">'+s[1]+' '+D.filter(d=>d[0]===s[0]).length+'</button>').join('');
+
+function render(){
+  let h="";
+  SEC.forEach(s=>{
+    if(cur!=="all" && cur!==s[0]) return;
+    const rows=D.filter(d=>d[0]===s[0]); if(!rows.length) return;
+    h+='<section class="sector" style="--sc:'+s[2]+'"><div class="sec-h"><span class="sec-n">'+s[1]+'</span><span class="sec-c">'+rows.length+' boards</span></div><p class="sec-d">'+s[3]+'</p><div class="grid">';
+    rows.forEach(r=>{
+      const [cls,lbl]=CH[r[3]];
+      const href=LIVE[r[1]]||('https://claude.ai/chat/'+r[4]);
+      const txt=LIVE[r[1]]?"Open tool":"Open chat";
+      h+='<article class="mod"><div class="mn">'+esc(r[1])+'</div><div class="md">'+esc(r[2])+'</div>'+
+         '<div class="mf"><span class="chip '+cls+'">'+lbl+'</span>'+
+         '<a class="open" href="'+href+'" target="_blank" rel="noopener">'+txt+' &rarr;</a></div></article>';
+    });
+    h+='</div></section>';
+  });
+  document.getElementById('out').innerHTML=h;
+}
+rail.addEventListener('click',e=>{
+  const b=e.target.closest('.f'); if(!b) return;
+  rail.querySelectorAll('.f').forEach(x=>{x.setAttribute('aria-pressed','false');x.style.background='transparent';x.style.color='';x.style.borderColor='';x.style.fontWeight='400'});
+  b.setAttribute('aria-pressed','true');
+  const c=b.dataset.c||'#C6F24E';
+  b.style.background=c;b.style.color='#0C0F11';b.style.borderColor=c;b.style.fontWeight='700';
+  cur=b.dataset.s; render();
+});
+render();
+</script>
+</body></html>
